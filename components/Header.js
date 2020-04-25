@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { APP_NAME } from '../config'
 import Link from 'next/link'
+import Router from 'next/router'
+import { signout, isAuth } from '../actions/auth'
+
 import {
   Collapse,
   Navbar,
@@ -15,6 +18,7 @@ import {
   DropdownItem,
   NavbarText
 } from 'reactstrap'
+
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -31,16 +35,25 @@ const Header = () => {
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <Link href="/signup">
-                    <NavLink>Signup</NavLink>
-                  </Link>
-                </NavItem>
-                <NavItem>
-                  <Link href="/signin">
-                    <NavLink>Signin</NavLink>
-                  </Link>
-                </NavItem>
+                {!isAuth() && (
+                  <>
+                    <NavItem>
+                      <Link href="/signup">
+                        <NavLink>Signup</NavLink>
+                      </Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link href="/signin">
+                        <NavLink>Signin</NavLink>
+                      </Link>
+                    </NavItem>
+                  </>
+                )}
+                {isAuth() && (
+                  <NavItem>
+                    <NavLink style={{ cursor: 'pointer' }} onClick={() => signout(() => Router.replace(`/signin`))}>Signout</NavLink>
+                  </NavItem>
+                )}
               </Nav>
             </Collapse>
           </Navbar>

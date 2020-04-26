@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { APP_NAME } from '../config'
 import Link from 'next/link'
 import Router from 'next/router'
 import { signout, isAuth } from '../actions/auth'
+
 
 import {
   Collapse,
@@ -22,6 +23,12 @@ import {
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false)
+    const [authenticated, setAuthenticated] = useState(false)
+
+    useEffect(() => {
+      setAuthenticated(isAuth())
+    }, [])
+
     const toggle = () => {
         setIsOpen(!isOpen)
     }
@@ -30,30 +37,44 @@ const Header = () => {
         <div>
           <Navbar color="light" light expand="md">
             <Link href="/">
-              <NavLink className="font-weight-bold">{APP_NAME}</NavLink>
+              <NavLink className="font-weight-bold pointer">{APP_NAME}</NavLink>
             </Link>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                {!isAuth() && (
-                  <>
-                    <NavItem>
-                      <Link href="/signup">
-                        <NavLink>Signup</NavLink>
-                      </Link>
-                    </NavItem>
-                    <NavItem>
-                      <Link href="/signin">
-                        <NavLink>Signin</NavLink>
-                      </Link>
-                    </NavItem>
-                  </>
-                )}
-                {isAuth() && (
+                {authenticated && isAuth().role == 0 && (
                   <NavItem>
-                    <NavLink style={{ cursor: 'pointer' }} onClick={() => signout(() => Router.replace(`/signin`))}>Signout</NavLink>
+                    <Link href='/user'>
+                      <NavLink  className='pointer'>{`${isAuth().name}'s Dashboard`}</NavLink>
+                    </Link>
                   </NavItem>
                 )}
+                {authenticated && isAuth().role == 1 && (
+                  <NavItem>
+                    <Link href='/admin'>
+                      <NavLink className='pointer'>{`${isAuth().name}'s Dashboard`}</NavLink>
+                    </Link>
+                  </NavItem>
+                )}
+                {authenticated ? (
+                    <NavItem>
+                      <NavLink className='pointer' onClick={() => signout(() => Router.replace(`/signin`))}>Signout</NavLink>
+                    </NavItem>
+                  ) : (
+                    <>
+                      <NavItem>
+                        <Link href="/signup">
+                          <NavLink className='pointer'>Signup</NavLink>
+                        </Link>
+                      </NavItem>
+                      <NavItem>
+                        <Link href="/signin">
+                          <NavLink className='pointer'>Signin</NavLink>
+                        </Link>
+                      </NavItem>
+                    </>
+                  )
+                }
               </Nav>
             </Collapse>
           </Navbar>

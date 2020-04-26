@@ -15,6 +15,9 @@ class MyDocument extends Document {
                         crossOrigin="anonymous" 
                     />
                 </Head>
+                <head>
+                    <title>MyBlogs</title>
+                </head>
                 <body>
                     <Main />
                     <NextScript />

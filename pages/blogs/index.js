@@ -1,35 +1,37 @@
 import Head from 'next/head'
+import router from 'next/router'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import Layout from '../../components/Layout'
 import { useState } from 'react'
 import { listBlogsWithCategoriesAndTags } from '../../actions/blog'
 import Card from '../../components/blog/Card'
-// import { API, DOMAIN, APP_NAME, FB_APP_ID } from '../../config'
+import { API, DOMAIN, APP_NAME, FB_APP_ID } from '../../config'
 
-const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, blogSkip }) => {
-    // const head = () => (
-    //     <Head>
-    //         <meta 
-    //             name='description' 
-    //             content='Programming blogs and tutorials on react node next and web developoment' 
-    //         />
-    //         <link rel='canonical' href={`${DOMAIN}${router.pathname}`} />
-    //         <meta property='og:title' content={`Latest web developoment tutorials | ${APP_NAME}`}/>
-    //         <meta 
-    //             name='og:description' 
-    //             content='Programming blogs and tutorials on react node next and web developoment' 
-    //         />
-    //         <meta property='og:type' content='website'/>
-    //         <meta property='og:url' content={`${DOMAIN}${router.pathname}`}/>
-    //         <meta property='og:site_name' content={`${APP_NAME}`}/>
+const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, blogSkip, router }) => {
+    const head = () => (
+        <Head>
+            <title>Blogs pages | {APP_NAME}</title>
+            <meta 
+                name='description' 
+                content='Programming blogs and tutorials on react node next and web developoment' 
+            />
+            <link rel='canonical' href={`${DOMAIN}${router.pathname}`} />
+            <meta property='og:title' content={`Latest web developoment tutorials | ${APP_NAME}`}/>
+            <meta 
+                name='og:description' 
+                content='Programming blogs and tutorials on react node next and web developoment' 
+            />
+            <meta property='og:type' content='website'/>
+            <meta property='og:url' content={`${DOMAIN}${router.pathname}`}/>
+            <meta property='og:site_name' content={`${APP_NAME}`}/>
 
-    //         <meta property='og:image' content={`${DOMAIN}/static/images/seoblog.jpg`}/>
-    //         <meta property='og:image:secure_url' content='/static/images/seoblog.jpg'/>
-    //         <meta property='og:image:type' content='image/jpg'/>
-    //         <meta property='fb:app_id' content={`${FB_APP_ID}`}/>
-    //     </Head>
-    // )
+            <meta property='og:image' content={`${DOMAIN}/static/images/seoblog.jpg`}/>
+            <meta property='og:image:secure_url' content='/static/images/seoblog.jpg'/>
+            <meta property='og:image:type' content='image/jpg'/>
+            <meta property='fb:app_id' content={`${FB_APP_ID}`}/>
+        </Head>
+    )
 
     const [limit, setLimit] = useState(blogsLimit)
     const [skip, setSkip] = useState(0)
@@ -96,25 +98,28 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, blogSkip }) =>
     }
 
     return (
-        <Layout>
-            <main>
-                <div className='container-fluid'>
-                    <header>
-                        <h1 className='display-4 font-weight-bold text-center'>Programming blogs and tutor</h1>
-                    </header>
-                    <section>
-                        <div className='pb-5 text-center'>
-                            {showAllCategories()}
-                            <br />
-                            {showAllTags()}
-                        </div>
-                    </section>
-                </div>
-                <div className='container-fluid'>{showAllBlogs()}</div>
-                <div className='container-fluid'>{showLoadedBlogs()}</div>
-                <div className='text-center pt-5 pb-5'>{loadMoreButton()}</div>
-            </main>
-        </Layout>
+        <>
+            {head()}
+            <Layout>
+                <main>
+                    <div className='container-fluid'>
+                        <header>
+                            <h1 className='display-4 font-weight-bold text-center'>Programming blogs and tutor</h1>
+                        </header>
+                        <section>
+                            <div className='pb-5 text-center'>
+                                {showAllCategories()}
+                                <br />
+                                {showAllTags()}
+                            </div>
+                        </section>
+                    </div>
+                    <div className='container-fluid'>{showAllBlogs()}</div>
+                    <div className='container-fluid'>{showLoadedBlogs()}</div>
+                    <div className='text-center pt-5 pb-5'>{loadMoreButton()}</div>
+                </main>
+            </Layout>
+        </>
     )
 }
 

@@ -8,7 +8,7 @@ import moment from 'moment'
 import renderHTML from 'react-render-html'
 import SmallCard from '../../components/blog/SmallCard'
 
-const SingleBlog = ({ blog }) => {
+const SingleBlog = ({ blog, query }) => {
     const [related, setRelated] = useState([])
     const loadRelated = () => {
         listRelated({ blog }).then(data => {
@@ -23,6 +23,26 @@ const SingleBlog = ({ blog }) => {
     useEffect(() => {
         loadRelated()
     }, [])
+
+    const head = () => (
+        <Head>
+            <title>
+                {blog.title} | {APP_NAME}
+            </title>
+            <meta name="description" content={blog.mdesc} />
+            <link rel="canonical" href={`${DOMAIN}/blogs/${query.slug}`} />
+            <meta property="og:title" content={`${blog.title}| ${APP_NAME}`} />
+            <meta property="og:description" content={blog.mdesc} />
+            <meta property="og:type" content="webiste" />
+            <meta property="og:url" content={`${DOMAIN}/blogs/${query.slug}`} />
+            <meta property="og:site_name" content={`${APP_NAME}`} />
+
+            <meta property="og:image" content={`${API}/blog/photo/${blog.slug}`} />
+            <meta property="og:image:secure_url" ccontent={`${API}/blog/photo/${blog.slug}`} />
+            <meta property="og:image:type" content="image/jpg" />
+            <meta property="fb:app_id" content={`${FB_APP_ID}`} />
+        </Head>
+    )
 
     const showBlogCategories = blog => {
         return blog.categories.map((c, i) => (
@@ -52,6 +72,7 @@ const SingleBlog = ({ blog }) => {
 
     return (
         <>
+            {head()}
             <Layout>
                 <main>
                     <article>
@@ -66,14 +87,17 @@ const SingleBlog = ({ blog }) => {
                                 </div>
                             </section>
                             <section>
-                                <p className='lead mt-3 mark'>
-                                    Written by {blog.postedBy.name} | Published {moment(blog.updatedAt).fromNow()}
-                                </p>
-                                <div className='pb-3'>
-                                    {showBlogCategories(blog)}
-                                    {showBlogTags(blog)}
-                                    <br />
-                                    <br />
+                                <div className='container'>
+                                    <h1 className='display-2 pb-3 pt-3 text-center font-weight-bold'>{blog.title}</h1>
+                                    <p className='lead mt-3 mark'>
+                                        Written by {blog.postedBy.name} | Published {moment(blog.updatedAt).fromNow()}
+                                    </p>
+                                    <div className='pb-3'>
+                                        {showBlogCategories(blog)}
+                                        {showBlogTags(blog)}
+                                        <br />
+                                        <br />
+                                    </div>
                                 </div>
                             </section>
                         </div>
@@ -107,7 +131,7 @@ SingleBlog.getInitialProps = ({query}) => {
             console.log(data.error)
         } else {
             // console.log('GET INITIAL PROPS IN SINGLE BLOG', data)
-            return { blog: data }
+            return { blog: data, query }
         }
     })
 }

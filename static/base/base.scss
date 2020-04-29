@@ -6,3 +6,16 @@
 .pointer {
     cursor: pointer;
 }
+
+// scroll
+.scrollY {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+// image
+.featured-image {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+}

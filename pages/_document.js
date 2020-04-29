@@ -20,7 +20,7 @@ class MyDocument extends Document {
                     />
                 </Head>
                 <head>
-                    <title>MyBlogs</title>
+                    <title>MyBlog</title>
                 </head>
                 <body>
                     <Main />

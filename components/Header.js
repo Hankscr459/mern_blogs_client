@@ -44,6 +44,13 @@ const Header = () => {
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>
+                <>
+                  <NavItem>
+                    <Link href="/blogs">
+                      <NavLink className='pointer'>Blogs</NavLink>
+                    </Link>
+                  </NavItem>
+                </>
                 {authenticated && isAuth().role == 0 && (
                   <NavItem>
                     <Link href='/user'>

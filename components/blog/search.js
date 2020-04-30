@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Router from 'next/router'
 import renderHTML from 'react-render-html'
 import { useState, useEffect } from 'react'
 import { listSearch } from '../../actions/blog'
@@ -6,39 +7,25 @@ import { listSearch } from '../../actions/blog'
 const Search = () => {
     const [values, setValues] = useState({
         search: undefined,
-        result: [],
         searched: false,
         message: ''
     })
     const {search, results, searched, message} = values
 
     const searchSubmit = e => {
-        e.preventDefault()
-        listSearch({search}).then(data => {
-            setValues({...values, results: data, searched: true, message: `${data.length} blogs found`})
-        })
+        e.preventDefault();
+        // listSearch({ search }).then(data => {
+        //     setValues({ ...values, results: data, searched: true, message: `${data.length} blogs found` });
+        // });
+        Router.push({
+            pathname: '/search',
+            query: { searchQuery: search }
+        });
     }
 
     const handleChange = e => {
         // console.log(e.target.value)
-        setValues({...values, search: e.target.value, searched: false, results: []})
-    }
-
-    const searchedBlogs = (results = []) => {
-        return (
-            <div className='jumbotron bg-white'>
-                {message && <p className='pt-4 text-muted font-italic'>{message}</p>}
-                {results.map((blog, i) => {
-                    return (
-                        <div key={i}>
-                            <Link href={`/blogs/${blog.slug}`}>
-                                <a className='text-primary'>{blog.title}</a>
-                            </Link>
-                        </div>
-                    )
-                })}
-            </div>
-        )
+        setValues({...values, search: e.target.value, searched: false})
     }
 
     const searchForm = () => (
@@ -64,7 +51,6 @@ const Search = () => {
     return (
         <div className='container-fluid'>
             <div className='pt-3 pb-5'>{searchForm()}</div>
-            {searched && <div style={{marginTop: '-120px', marginBottom: '-80px'}}>{searchedBlogs(results)}</div>}
         </div>
     )
 }

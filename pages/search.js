@@ -23,12 +23,19 @@ const Search = ({ router }) => {
                     <div className="container-fluid">
                         <header>
                             <div className="col-md-12 pt-3">
-                                <h1 className="font-weight-bold text-center">Search</h1>
+                                <h3 className="font-weight-bold text-center">Search</h3>
                             </div>
                             <section>
                                 <div className="pb-5 text-center">
-                                    <p>show search results here</p>
-                                    {JSON.stringify(results)}
+                                    <p>{results.length} blogs found</p>
+                                    <div className='col-md-12'>
+                                        {results.map((b, i) => (
+                                            <div key={i}>
+                                                <Card blog={b} />
+                                                <hr />
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </section>
                         </header>

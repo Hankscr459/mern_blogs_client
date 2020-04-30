@@ -38,8 +38,8 @@ const Category = ({category, blogs, query}) => {
                             <div className='col-md-12 pt-3'>
                                 <h1 className='display-4 font-weight-bold'>{category.name}</h1>
                                 {blogs.map((b, i) => (
-                                    <div>
-                                        <Card key={i} blog={b} />
+                                    <div key={i}>
+                                        <Card blog={b} />
                                         <hr />
                                     </div>
                                 ))}

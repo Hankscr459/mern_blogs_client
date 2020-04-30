@@ -27,7 +27,7 @@ export const getCategories = () => {
         .catch(err => console.log(err))
 }
 
-export const singleCategories = (slug) => {
+export const singleCategory = (slug) => {
     return fetch(`${API}/category/${slug}`, {
         method: 'GET'
     })

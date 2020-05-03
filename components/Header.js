@@ -67,9 +67,16 @@ const Header = () => {
                   </NavItem>
                 )}
                 {authenticated ? (
+                    <>
                     <NavItem>
                       <NavLink className='pointer' onClick={() => signout(() => Router.replace(`/signin`))}>Signout</NavLink>
                     </NavItem>
+                    <NavItem>
+                      <Link href="/user/crud/blog">
+                          <NavLink className='btn btn-primary text-light pointer'>Write a blog</NavLink>
+                      </Link>
+                    </NavItem>
+                    </>
                   ) : (
                     <>
                       <NavItem>

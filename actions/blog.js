@@ -1,9 +1,17 @@
 import fetch from 'isomorphic-fetch'
 import { API } from '../config'
 import queryString from 'query-string'
+import { isAuth } from './auth'
 
 export const createBlog = (blog, token) => {
-    return fetch(`${API}/blog`, {
+    let createBlogEndpoint
+    if (isAuth && isAuth().role === 1 ) {
+        createBlogEndpoint = `${API}/blog`
+    } else if (isAuth() && isAuth().role === 0 ) {
+        createBlogEndpoint = `${API}/user/blog`
+    }
+
+    return fetch(`${createBlogEndpoint}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -61,8 +69,14 @@ export const listRelated = (blog) => {
         .catch(err => console.log(err))
 }
 
-export const list = () => {
-    return fetch(`${API}/blogs`, {
+export const list = (username) => {
+    let listBlogsEndpoint
+    if (username) {
+        listBlogsEndpoint = `${API}/${username}/blogs`
+    } else {
+        listBlogsEndpoint = `${API}/blogs`
+    }
+    return fetch(`${listBlogsEndpoint}`, {
         method: 'GET'
     })
     .then(response => {
@@ -72,7 +86,13 @@ export const list = () => {
 }
 
 export const removeBlog = (slug, token) => {
-    return fetch(`${API}/blog/${slug}`, {
+    let deleteBlogsEndpoint
+    if (isAuth() && isAuth().role === 0) {
+        deleteBlogsEndpoint = `${API}/user/blog/${slug}`
+    } else if (isAuth() && isAuth().role === 1) {
+        deleteBlogsEndpoint = `${API}/blog/${slug}`
+    }
+    return fetch(`${deleteBlogsEndpoint}`, {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
@@ -87,7 +107,13 @@ export const removeBlog = (slug, token) => {
 }
 
 export const updateBlog = (blog, token, slug) => {
-    return fetch(`${API}/blog/${slug}`, {
+    let updateBlogsEndpoint
+    if (isAuth() && isAuth().role === 0) {
+        updateBlogsEndpoint = `${API}/user/blog/${slug}`
+    } else if (isAuth() && isAuth().role === 1) {
+        updateBlogsEndpoint = `${API}/blog/${slug}`
+    }
+    return fetch(`${updateBlogsEndpoint}`, {
         method: 'PUT',
         headers: {
             Accept: 'application/json',

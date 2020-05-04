@@ -4,7 +4,7 @@ import Layout from '../../components/Layout'
 import { userPublicProfile } from '../../actions/user'
 import { API, DOMAIN, APP_NAME, FB_APP_ID } from '../../config'
 import moment from 'moment'
-import ContactForm from '../../components/form/ConactForm'
+import ContactForm from '../../components/form/ContactForm'
 
 const UserProfile = ({user, blogs, query }) => {
     const head = () => (

@@ -2,7 +2,7 @@ import Layout from '../components/Layout'
 import Head from 'next/head'
 import Link from 'next/link'
 import { API, DOMAIN, APP_NAME, FB_APP_ID } from '../config'
-import ContactForm from '../components/form/ConactForm'
+import ContactForm from '../components/form/ContactForm'
 
 const Index = () => {
 

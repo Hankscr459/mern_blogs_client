@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { signin, autheticate, isAuth } from '../../actions/auth'
 import Router from 'next/router'
+import Link from 'next/link'
 
 const SigninComponent = () => {
     const [values, setValues] = useState({
@@ -83,6 +84,10 @@ const SigninComponent = () => {
             {showError()}
             {showMessage()}
             {showForm && signinForm()}
+            <br />
+            <Link href='/auth/password/forgot'>
+                <a className='btn btn-outline-danger'>Forgot password</a>
+            </Link>
         </>
     )
 }

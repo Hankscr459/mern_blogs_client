@@ -46,7 +46,6 @@ export const signin = user => {
         .catch(err => console.log(err))
 }
 
-
 // set cookie 
 // process.browser to distinguish between server environment (NodeJS) and client environment (browser).
 // process.browser is true on the client and undefined on the server.
@@ -106,7 +105,6 @@ export const autheticate = (data, next) => {
     next()
 }
 
-
 export const isAuth = () => {
     if(process.browser) {
         const cookieChecked = getCookie('token')
@@ -129,4 +127,34 @@ export const updateUser = (user, next) => {
             next()
         }
     }
+}
+
+export const forgotPassword = email => {
+    return fetch(`${API}/forgot-password`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(email)
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => console.log(err))
+}
+
+export const resetPassword = resetInfo => {
+    return fetch(`${API}/reset-password`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(resetInfo)
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => console.log(err))
 }

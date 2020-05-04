@@ -51,6 +51,11 @@ const Header = () => {
                       <NavLink className='pointer'>Blogs</NavLink>
                     </Link>
                   </NavItem>
+                  <NavItem>
+                    <Link href="/contact">
+                      <NavLink className='pointer'>Contact</NavLink>
+                    </Link>
+                  </NavItem>
                 </>
                 {authenticated && isAuth().role == 0 && (
                   <NavItem>

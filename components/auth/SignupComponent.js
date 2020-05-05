@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { signup, isAuth } from '../../actions/auth'
+import { signup, isAuth, preSignup } from '../../actions/auth'
 import Router from 'next/router'
+import Link from 'next/link'
 
 const SignupComponent = () => {
     const [values, setValues] = useState({
@@ -11,7 +12,7 @@ const SignupComponent = () => {
         loading: false,
         message: '',
         showForm: true
-    });
+    })
 
     const { name, email, password, error, loading, message, showForm } = values
 
@@ -25,7 +26,7 @@ const SignupComponent = () => {
         setValues({ ...values, loading: true, error: false })
         const user = { name, email, password }
 
-        signup(user).then(data => {
+        preSignup(user).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error, loading: false })
             } else {
@@ -38,14 +39,14 @@ const SignupComponent = () => {
                     loading: false,
                     message: data.message,
                     showForm: false
-                });
+                })
             }
-        });
-    };
+        })
+    }
 
     const handleChange = name => e => {
         setValues({ ...values, error: false, [name]: e.target.value })
-    };
+    }
 
     const showLoading = () => (loading ? <div className="alert alert-info">Loading...</div> : '')
     const showError = () => (error ? <div className="alert alert-danger">{error}</div> : '')
@@ -88,8 +89,8 @@ const SignupComponent = () => {
                     <button className="btn btn-primary">Signup</button>
                 </div>
             </form>
-        );
-    };
+        )
+    }
 
     return (
         <React.Fragment>
@@ -102,7 +103,7 @@ const SignupComponent = () => {
                 <a className='btn btn-outline-danger'>Forgot password</a>
             </Link>
         </React.Fragment>
-    );
-};
+    )
+}
 
 export default SignupComponent

@@ -78,7 +78,7 @@ const Header = () => {
                     </NavItem>
                     <NavItem>
                       <Link href="/user/crud/blog">
-                          <NavLink className='btn btn-primary text-light pointer'>Write a blog</NavLink>
+                          <a className='btn btn-primary text-light pointer'>Write a blog</a>
                       </Link>
                     </NavItem>
                     </>

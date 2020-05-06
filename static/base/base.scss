@@ -19,3 +19,10 @@
     max-height: 500px;
     object-fit: cover;
 }
+
+// link
+a {
+    &:hover{
+        text-decoration: none;
+    }
+}

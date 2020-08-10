@@ -2,13 +2,14 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import Router from 'next/router'
 import { getCookie, isAuth } from '../../actions/auth'
-import { list, removeBlog } from '../../actions/blog'
+import { list, removeBlog, removeManyBlog } from '../../actions/blog'
 import moment from 'moment'
 
 const BlogRead = ({username}) => {
     const [blogs, setBlogs] = useState([])
     const [message, setMessage] = useState('')
     const token = getCookie('token')
+    const [checked, setChecked] = useState([])
 
     useEffect(() => {
         loadBlogs()
@@ -26,6 +27,19 @@ const BlogRead = ({username}) => {
 
     const deleteBlog = (slug) => {
         removeBlog(slug, token).then(data => {
+            if(data.error) {
+                console.log(data.error)
+            } else {
+                setMessage(data.message)
+                loadBlogs()
+            }
+        })
+    }
+
+    const deleteBlogs = (checked) => {
+        const slug = checked.toString()
+        console.log(typeof slug)
+        removeManyBlog(slug, token).then(data => {
             if(data.error) {
                 console.log(data.error)
             } else {
@@ -58,16 +72,38 @@ const BlogRead = ({username}) => {
         }
     }
 
+    const handleToggle = blog => () => {
+        // setValues({...values, error: ''})
+        // retrun the frist index or -1
+        const clickedSlug = checked.indexOf(blog)
+        const all = [...checked]
+        if(clickedSlug === -1) {
+            all.push(blog)
+        } else {
+            all.splice(clickedSlug, 1)
+        }
+        console.log(all)
+        console.log(clickedSlug)
+        setChecked(all)
+        // formData.set('slugs', all)
+    }
+
     const showAllBlogs = () => {
         return blogs.map((blog, i) => {
             return (
                 <div key={i} className='pb-5'>
-                    <h3>{blog.title}</h3>
+                    <label className='form-check-label pointer'>
+                        <input onChange={handleToggle(blog.slug)} type="checkbox" value={`${blog.slug}`} />
+                        <span className='pl-3'>{blog.title}</span>
+                    </label>
+                    
                     <p className='mark'>Written by {blog.postedBy.name} | Published on {moment(blog.updatedAt).fromNow()}</p>
                     <button className='btn btn-sm btn-danger' onClick={() => deleteConfirm(blog.slug)}>
                         Delete
                     </button>
                     {showUpdateButton(blog)}
+                    
+                    
                 </div>
             )
         })
@@ -80,6 +116,7 @@ const BlogRead = ({username}) => {
                     {message && <div className='alert alert-warning'>{message}</div>}
                     {showAllBlogs()}
                 </div>
+                <button className='btn btn-sm btn-danger' onClick={() => deleteBlogs(checked)}>Select Delete</button>
             </div>
         </>
     )

@@ -45,7 +45,7 @@ export const listBlogsWithCategoriesAndTags = (skip, limit) => {
         .catch(err => console.log(err))
 }
 
-export const singleBlog = slug => {
+export const singleBlog = ( slug = undefined) => {
     return fetch(`${API}/blog/${slug}`, {
         method: 'GET'
     })
@@ -92,6 +92,28 @@ export const removeBlog = (slug, token) => {
         deleteBlogsEndpoint = `${API}/user/blog/${slug}`
     } else if (isAuth() && isAuth().role === 1) {
         deleteBlogsEndpoint = `${API}/blog/${slug}`
+    }
+    return fetch(`${deleteBlogsEndpoint}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        }
+    })
+        .then(response => {
+            handleResponse(response)
+            return response.json()
+        })
+        .catch(err => console.log(err))
+}
+
+export const removeManyBlog = (slug, token) => {
+    let deleteBlogsEndpoint
+    if (isAuth() && isAuth().role === 0) {
+        deleteBlogsEndpoint = `${API}/user/blogs/${slug}`
+    } else if (isAuth() && isAuth().role === 1) {
+        deleteBlogsEndpoint = `${API}/blogs/${slug}`
     }
     return fetch(`${deleteBlogsEndpoint}`, {
         method: 'DELETE',

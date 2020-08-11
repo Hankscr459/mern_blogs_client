@@ -9,7 +9,7 @@ const BlogRead = ({username}) => {
     const [blogs, setBlogs] = useState([])
     const [message, setMessage] = useState('')
     const token = getCookie('token')
-    const [checked, setChecked] = useState([])
+    const [checked, setChecked] = useState([]) 
 
     useEffect(() => {
         loadBlogs()
@@ -92,11 +92,10 @@ const BlogRead = ({username}) => {
         return blogs.map((blog, i) => {
             return (
                 <div key={i} className='pb-5'>
-                    <label className='form-check-label pointer'>
+                    <label className="form-check-label pointer">
                         <input onChange={handleToggle(blog.slug)} type="checkbox" value={`${blog.slug}`} />
-                        <span className='pl-3'>{blog.title}</span>
+                        <span className='ml-3'>{blog.slug}</span>
                     </label>
-                    
                     <p className='mark'>Written by {blog.postedBy.name} | Published on {moment(blog.updatedAt).fromNow()}</p>
                     <button className='btn btn-sm btn-danger' onClick={() => deleteConfirm(blog.slug)}>
                         Delete
@@ -114,9 +113,10 @@ const BlogRead = ({username}) => {
             <div className='row'>
                 <div className='col-md-12'>
                     {message && <div className='alert alert-warning'>{message}</div>}
+                    <button className='btn btn-sm btn-danger mb-4' onClick={() => deleteBlogs(checked)}>Select to Delete</button>
                     {showAllBlogs()}
                 </div>
-                <button className='btn btn-sm btn-danger' onClick={() => deleteBlogs(checked)}>Select Delete</button>
+                
             </div>
         </>
     )

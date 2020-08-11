@@ -28,3 +28,21 @@
 ![](./images/admindashboard.jpg)
 ![](./images/blogcreate.jpg)
 ![](./images/userupdate.jpg)
+
+# 技術
+* React
+* Hooks
+* Next.js
+* API (isomorphic-fetch)
+* Bootstrap
+* scss
+
+# 套件
+* Bootstrap 4
+* moment
+* next
+* js-cookie
+* jsonwebtoken
+* react-quill
+* react-facebook-login&react-google-login
+* nprogress

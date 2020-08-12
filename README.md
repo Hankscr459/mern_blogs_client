@@ -17,6 +17,8 @@
 ![部落格頁](./images/blogspages.jpg)
 ![搜尋結果頁](./images/searchpage.jpg)
 ![登入頁](./images/login.jpg)
+![登入頁](./images/userpage.jpg)
+![](./images/DisqusThread.jpg)
 
 * 後台
   * 文章管理頁(CRUD)
@@ -28,6 +30,7 @@
 ![](./images/admindashboard.jpg)
 ![](./images/blogcreate.jpg)
 ![](./images/userupdate.jpg)
+
 
 # 技術
 * React
@@ -45,4 +48,6 @@
 * jsonwebtoken
 * react-quill
 * react-facebook-login&react-google-login
+* DisqusThread
 * nprogress
+
